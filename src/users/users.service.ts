@@ -1,11 +1,11 @@
 import { match } from "assert";
 
 export class UsersService {
-    users: { id: number, name: string, age: number, gender: string, isMarried: boolean }[] = [
-        { id : 1, name: 'john', age: 28, gender: 'male', isMarried: true },
-        { id : 2,name: 'lily', age: 25, gender: 'female', isMarried: true },
-        { id : 3,name: 'matty', age: 20, gender: 'male', isMarried: false },
-        { id : 4,name: 'derry', age: 15, gender: 'male', isMarried: false }
+    users: { id: number, name: string, email: string, gender: string, isMarried: boolean }[] = [
+        { id : 1, name: 'john', email:'john@gmail.com', gender: 'male', isMarried: true },
+        { id : 2,name: 'lily', email:'lily@gmail.com', gender: 'female', isMarried: true },
+        { id : 3,name: 'matty', email:'matty@gmail.com', gender: 'male', isMarried: false },
+        { id : 4,name: 'derry', email:'derry@gmail.com', gender: 'male', isMarried: false }
     ]
     getAllUsers(){
         return this.users;
@@ -17,7 +17,7 @@ export class UsersService {
 
 
 
-    createUser(user: {id: number, name: string, age: number, gender: string, isMarried: boolean}){
+    createUser(user: {id: number, name: string, email: string, gender: string, isMarried: boolean}){
         this.users.push(user);
     }
 }

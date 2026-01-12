@@ -1,4 +1,4 @@
-import { match } from "assert";
+import { Injectable } from "@nestjs/common";
 
 export class UsersService {
     users: { id: number, name: string, email: string, gender: string, isMarried: boolean }[] = [

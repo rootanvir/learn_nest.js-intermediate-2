@@ -16,4 +16,7 @@ export class CreateUserDto{
     @IsString()
     @IsEmail()
     email: string;
+
+    @IsBoolean()
+    isMarried: boolean
 }

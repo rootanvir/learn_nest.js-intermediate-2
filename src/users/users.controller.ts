@@ -1,13 +1,14 @@
-import { Body, Controller, DefaultValuePipe, Get, Param, ParseBoolPipe, ParseIntPipe, Post, Query, ValidationPipe } from "@nestjs/common"
+import { Body, Controller, DefaultValuePipe, Get, Param, ParseBoolPipe, ParseIntPipe, Patch, Post, Query, ValidationPipe } from "@nestjs/common"
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { GetUserParamDto } from "./dto/get-user-param.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Controller('users')
 export class UserController {
-    userService: UsersService;
-    constructor() {
-        this.userService = new UsersService();
+    
+    constructor(private userService: UsersService) {
+
     }
     @Get()
     getAll() {
@@ -40,4 +41,10 @@ export class UserController {
         console.log(user instanceof CreateUserDto);
         return `new user added successfully !`;
     }
+
+    @Patch()
+    updateUser(@Body() user:UpdateUserDto){
+        console.log(user);
+        return 'user updated successfully !';
+    }   
 }

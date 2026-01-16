@@ -1,29 +1,32 @@
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { AuthService } from "src/auth/auth.service";
+import { Repository } from "typeorm";
+import { User } from "./user.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { CreateUserDto } from "./dto/create-user.dto";
 
 export class UsersService {
-    constructor(@Inject(forwardRef (() => AuthService)) private readonly authService: AuthService) { }
+    constructor(
+        @InjectRepository(User)
+        private userRepository: Repository <User>
+    ) {}
 
-    users: { id: number, name: string, email: string, gender: string, isMarried: boolean, password: string }[] = [
-        { id: 1, name: 'john', email: 'john@gmail.com', gender: 'male', isMarried: true, password: '123' },
-        { id: 2, name: 'lily', email: 'lily@gmail.com', gender: 'female', isMarried: true, password: '123' },
-        { id: 3, name: 'matty', email: 'matty@gmail.com', gender: 'male', isMarried: false, password: '123' },
-        { id: 4, name: 'derry', email: 'derry@gmail.com', gender: 'male', isMarried: false, password: '123' }
-    ]
     getAllUsers() {
-        if (this.authService.isAuthenticated) {
-            return this.users;
+        return this.userRepository.find();
+    }
+
+    public async createUser(userDto: CreateUserDto){
+        const user = await this.userRepository.findOne({
+            where: {email: userDto.email}
+        })
+        if(user){
+            return 'The user with the gmail already exist !';
         }
-        return 'YOU_ARE_NOT_LOGIN';
+        let newUser = this.userRepository.create(userDto);
+        newUser = await this.userRepository.save(newUser);
+        return newUser;
     }
 
-    getUserById(id: Number) {
-        return this.users.find(x => x.id === id);
-    }
+  
 
-
-
-    createUser(user: { id: number, name: string, email: string, gender: string, isMarried: boolean, password: string }) {
-        this.users.push(user);
-    }
 }
